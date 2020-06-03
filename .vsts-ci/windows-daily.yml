@@ -28,9 +28,6 @@ pr:
     - /.github/ISSUE_TEMPLATE/*
     - /.dependabot/config.yml
 
-env:
-  CAP_TOKEN: $(CAP_INGRESS_TOKEN)
-
 variables:
   GIT_CONFIG_PARAMETERS: "'core.autocrlf=false'"
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -164,6 +161,8 @@ stages:
             Import-Module $capModuleFile
             Stop-TraceCollection -DataDir $capDataDir -RepoRoot $pwd -IngressToken $env:CAP_TOKEN
         }
+      env:
+        CAP_TOKEN: $(CAP_INGRESS_TOKEN)
       displayName: 'Upload CLR Trace'
       condition: always()
 
